@@ -1,0 +1,23 @@
+# Fichiers Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Environnements virtuels
+.venv/
+venv/
+env/
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+
+# PyCharm
+.idea/
+
+# Jupyter (si jamais)
+.ipynb_checkpoints/
+
+# Logs
+*.log
