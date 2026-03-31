@@ -10,5 +10,5 @@ joueurs = [
 {"nom": "Hugo", "score": 89, "salaire": 1600, "poids": 80},
 ]
 
-nombre_joueurs = len(joueurs)
-joueurs_id = range(nombre_joueurs)  # 0..7
+# nombre_joueurs = len(joueurs)
+# joueurs_id = range(nombre_joueurs)  # 0..7
