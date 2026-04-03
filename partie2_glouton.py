@@ -1,5 +1,6 @@
 from joueurs import joueurs
 from itertools import combinations
+import matplotlib.pyplot as plt
 
 nombre_joueurs = len(joueurs)
 joueurs_id = range(nombre_joueurs)  # 0..7
@@ -106,6 +107,7 @@ def alt_score_ratio():
     return construire_equipe(joueurs_selectiones, "Strategie_4 : Alternance score/ratio ")
 
 # 6- Exécution des stratégie et tableau comparatif
+#===============================================
 def main():
     resultat_1 = score_absolue()
     resultat_2 = ratio_score_salaire()
@@ -131,6 +133,32 @@ def main():
     print("-" * 100)
     print(f"{'PuLP':<50} {score_global:<12} {budget_total:<15}")
 
+    # === Graphique comparatif des scores===
+    scores_dict = {
+        "Strategie_1": resultat_1["score_total"],
+        "Strategie_2": resultat_2["score_total"],
+        "Strategie_3": resultat_3["score_total"],
+        "Strategie_4": resultat_4["score_total"],
+        "PuLP (optimal)": score_global
+    }
+    couleurs = ["steelblue", "salmon", "green", "yellow", "turquoise"]
+
+    plt.figure(figsize=(10, 6))
+    plt.bar(scores_dict.keys(), scores_dict.values(), color=couleurs)
+
+    plt.axhline(y=score_global, linestyle="--", color="red", linewidth=2, label="PuLP optimal")
+    plt.title("PuLP vs Glouton")
+    plt.xlabel("Strategies")
+    plt.ylabel("Score")
+    plt.xticks(rotation=30)
+
+    plt.legend()
+    plt.tight_layout()
+    plt.show()
+
 if __name__ == "__main__":
     main()
+
+
+
 
