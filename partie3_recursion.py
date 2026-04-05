@@ -1,5 +1,6 @@
 import time
 from joueurs import joueurs
+import matplotlib.pyplot as plt
 
 # ====Trier les joueurs selon un score décroissant
 joueurs_tries = sorted(joueurs, key=lambda j: j["score"], reverse=True)
@@ -21,8 +22,12 @@ score_cumule(joueurs_tries, 6)
 
 print("-"* 80)
 
+compteur_naif = [0]
+compteur_memo = [0]
+
 # ======Fibonacci naif ========
 def fib_naif(n):
+    compteur_naif[0] +=1
     if n == 0:
         return 93
     if n == 1:
@@ -40,6 +45,7 @@ print("-"* 80)
 
 cache = {}
 def fib_memo(n):
+    compteur_memo[0] +=1
     if n in cache:
         return cache[n]
 
@@ -56,3 +62,32 @@ debut = time.perf_counter()
 resultat = fib_memo(35)
 fin = time.perf_counter()
 print(f"fib_memo(35) = {resultat}    Temp : {fin - debut: .6f} s")
+
+# Mesure du nombre d'appels pour n = 1 à 25
+valeur_n = list(range(1, 26))
+appels_naif = []
+appels_memo = []
+
+for n in valeur_n:
+    compteur_naif[0] = 0
+    compteur_memo[0] = 0
+    cache.clear()
+
+    fib_naif(n)
+    fib_memo(n)
+
+    appels_naif.append(compteur_naif[0])
+    appels_memo.append(compteur_memo[0])
+
+# Graphique
+plt.figure(figsize=(10,6))
+plt.plot(valeur_n, appels_naif, label="fib_naif", marker="o")
+plt.plot(valeur_n, appels_memo, label="fib_memo", marker="o")
+
+plt.yscale("log")
+plt.xlabel("n")
+plt.ylabel("Nombre d'appels récursifs(échelle log)")
+plt.title("Croissance du nombre d'appels récursifs: naif vs mémoisé")
+plt.legend()
+plt.grid(True)
+plt.show()
